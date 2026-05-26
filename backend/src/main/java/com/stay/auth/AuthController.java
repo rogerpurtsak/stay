@@ -1,5 +1,6 @@
 package com.stay.auth;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -10,5 +11,11 @@ public class AuthController {
 
     public AuthController(AuthService authService) {
         this.authService = authService;
+    }
+
+    @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
+    public AuthResponse register(@RequestBody RegisterRequest request) {
+        return authService.register(request);
     }
 }
