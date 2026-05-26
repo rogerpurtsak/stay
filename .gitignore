@@ -44,3 +44,6 @@ yarn-error.*
 backend/.gradle/
 backend/build/
 backend/out/
+
+# Backend env
+backend/.env
