@@ -35,4 +35,17 @@ public class AuthService {
 
         return new AuthResponse(token, saved.getId(), saved.getDisplayName());
     }
+
+    public AuthResponse login(LoginRequest request) {
+        User user = userRepository.findByEmail(request.email())
+        .orElseThrow(() -> new IllegalArgumentException("Invalid credentials"));
+
+        if (passwordEncoder.matches(request.password(), user.getPasswordHash())) {
+            String token = jwtService.generate(user.getId(), user.getEmail());
+            return new AuthResponse(token, user.getId(), user.getDisplayName());
+        } else {
+            throw new IllegalArgumentException("invalid credentials");
+        }
+
+    }
 }
