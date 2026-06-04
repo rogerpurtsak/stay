@@ -1,7 +1,10 @@
 package com.stay.auth;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import com.stay.users.User;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -22,5 +25,10 @@ public class AuthController {
     @PostMapping("/login")
     public AuthResponse login(@RequestBody LoginRequest request) {
         return authService.login(request);
+    }
+
+    @GetMapping("/me")
+    public User me(@AuthenticationPrincipal User user) {
+        return user;
     }
 }
