@@ -5,9 +5,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "trip_members", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"trip_id", "user_id"})
-})
+@Table(name = "trip_members")
 public class TripMember {
 
     @Id
@@ -17,8 +15,14 @@ public class TripMember {
     @Column(name = "trip_id", nullable = false)
     private UUID tripId;
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id")
     private UUID userId;
+
+    @Column(unique = true)
+    private String guestToken;
+
+    @Column(nullable = false)
+    private String displayName;
 
     @Column(nullable = false, updatable = false)
     private Instant joinedAt = Instant.now();
@@ -28,5 +32,9 @@ public class TripMember {
     public void setTripId(UUID tripId) { this.tripId = tripId; }
     public UUID getUserId() { return userId; }
     public void setUserId(UUID userId) { this.userId = userId; }
+    public String getGuestToken() { return guestToken; }
+    public void setGuestToken(String guestToken) { this.guestToken = guestToken; }
+    public String getDisplayName() { return displayName; }
+    public void setDisplayName(String displayName) { this.displayName = displayName; }
     public Instant getJoinedAt() { return joinedAt; }
 }
