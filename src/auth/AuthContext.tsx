@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { tokenStorage } from './tokenStorage';
+import { guestTokenStorage } from './guestTokenStorage';
 import { apiClient } from '../api/client';
 
 type AuthUser = {
@@ -10,6 +11,7 @@ type AuthUser = {
 
 type AuthContextType = {
   user: AuthUser | null;
+  guestToken: string | null;
   loading: boolean;
   login: (token: string, userId: string, displayName: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -19,19 +21,25 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
+  const [guestToken, setGuestToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    tokenStorage.load().then(token => {
+    const init = async () => {
+      const token = await tokenStorage.load();
       if (token) {
-        apiClient.get<{ id: string; displayName: string }>('/api/auth/me')
-          .then(me => setUser({ token, userId: me.id, displayName: me.displayName }))
-          .catch(() => tokenStorage.clear())
-          .finally(() => setLoading(false));
-      } else {
-        setLoading(false);
+        try {
+          const me = await apiClient.get<{ id: string; displayName: string }>('/api/auth/me');
+          setUser({ token, userId: me.id, displayName: me.displayName });
+        } catch {
+          await tokenStorage.clear();
+        }
       }
-    });
+      const gt = await guestTokenStorage.getOrCreate();
+      setGuestToken(gt);
+      setLoading(false);
+    };
+    init();
   }, []);
 
   const login = async (token: string, userId: string, displayName: string) => {
@@ -45,7 +53,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, guestToken, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
