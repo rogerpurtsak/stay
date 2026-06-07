@@ -18,8 +18,8 @@ public class TripController {
     }
 
     @GetMapping("/{id}")
-    public Trip getTrip(@PathVariable UUID id) {
-        return tripService.getById(id);
+    public TripDetailResponse getTrip(@PathVariable UUID id) {
+        return tripService.getTripDetail(id);
     }
 
     @GetMapping("/join/{inviteCode}")
@@ -27,10 +27,16 @@ public class TripController {
         return tripService.getByInviteCode(inviteCode);
     }
 
-    @PostMapping()
+    @PostMapping
     public CreateTripResponse createTrip(@AuthenticationPrincipal User user, @RequestBody CreateTripRequest request) {
         return tripService.createTrip(user, request);
+    }
 
-        
+    @PostMapping("/{inviteCode}/join")
+    public JoinTripResponse joinTrip(
+            @PathVariable String inviteCode,
+            @RequestBody JoinTripRequest request,
+            @AuthenticationPrincipal User currentUser) {
+        return tripService.joinTrip(inviteCode, request, currentUser);
     }
 }

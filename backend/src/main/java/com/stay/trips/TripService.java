@@ -6,6 +6,9 @@ import com.stay.tripmembers.TripMemberRepository;
 import com.stay.users.User;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -61,5 +64,34 @@ public class TripService {
         tripMemberRepository.save(member);
 
         return new CreateTripResponse(saved.getId(), saved.getInviteCode());
+    }
+
+    public JoinTripResponse joinTrip(String inviteCode, JoinTripRequest request, User currentUser) {
+        Trip trip = tripRepository.findByInviteCode(inviteCode)
+                .orElseThrow(() -> new ResourceNotFoundException("Trip not found"));
+
+        TripMember member = new TripMember();
+        member.setTripId(trip.getId());
+
+        if (currentUser != null) {
+            member.setUserId(currentUser.getId());
+            member.setDisplayName(currentUser.getDisplayName());
+        } else {
+            if (request.guestToken() == null || request.guestToken().isBlank()) {
+                throw new IllegalArgumentException("Guest token is required");
+            }
+            member.setGuestToken(request.guestToken());
+            member.setDisplayName(request.displayName());
+        }
+
+        tripMemberRepository.save(member);
+
+        return new JoinTripResponse(trip.getId(), trip.getInviteCode(), trip.getLocationName());
+    }
+
+    public TripDetailResponse getTripDetail(UUID tripId) {
+        Trip trip = getById(tripId);
+        List<TripMember> members = tripMemberRepository.findByTripId(tripId);
+        return new TripDetailResponse(trip.getId(), trip.getLocationName(), trip.getGuests(), members);
     }
 }
