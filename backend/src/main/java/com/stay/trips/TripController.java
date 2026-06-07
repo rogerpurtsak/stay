@@ -1,6 +1,10 @@
 package com.stay.trips;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import com.stay.users.User;
+
 import java.util.UUID;
 
 @RestController
@@ -21,5 +25,12 @@ public class TripController {
     @GetMapping("/join/{inviteCode}")
     public Trip getTripByInviteCode(@PathVariable String inviteCode) {
         return tripService.getByInviteCode(inviteCode);
+    }
+
+    @PostMapping()
+    public CreateTripResponse createTrip(@AuthenticationPrincipal User user, @RequestBody CreateTripRequest request) {
+        return tripService.createTrip(user, request);
+
+        
     }
 }
