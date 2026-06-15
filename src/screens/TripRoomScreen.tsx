@@ -176,6 +176,12 @@ export default function TripRoomScreen() {
           <Text className="text-white font-semibold text-base">Swipe Stays</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => navigation.navigate('ActivityFeed', { tripId })}
+          className="py-4 rounded-2xl items-center border border-gray-200"
+        >
+          <Text className="font-semibold text-base">Activity</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => navigation.navigate('Matches', { tripId })}
           className="py-4 rounded-2xl items-center border border-gray-200"
         >

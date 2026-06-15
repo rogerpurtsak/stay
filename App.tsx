@@ -14,6 +14,7 @@ import MatchesScreen from './src/screens/MatchesScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import MyTripsScreen from './src/screens/MyTripsScreen';
 import AddedItemsScreen from './src/screens/AddedItemsScreen';
+import ActivityFeedScreen from './src/screens/ActivityFeedScreen';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -34,6 +35,7 @@ export type RootStackParamList = {
   Profile: undefined;
   MyTrips: undefined;
   AddedItems: { tripId: string };
+  ActivityFeed: { tripId: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -55,6 +57,7 @@ export default function App() {
           <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen name="MyTrips" component={MyTripsScreen} />
           <Stack.Screen name="AddedItems" component={AddedItemsScreen} />
+          <Stack.Screen name="ActivityFeed" component={ActivityFeedScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
