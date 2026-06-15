@@ -3,6 +3,8 @@ package com.stay.stays;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -17,31 +19,36 @@ public class Stay {
     private String name;
 
     @Column(nullable = false)
-    private String location;
+    private String locationName;
 
-    private BigDecimal pricePerNight;
-    private String imageUrl;
-    private String bookingUrl;
     private BigDecimal latitude;
     private BigDecimal longitude;
+    private BigDecimal priceFrom;
+    private BigDecimal rating;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+    private String bookingUrl;
+    private String vibeTags;
 
     @Column(nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
 
+    @OneToMany(mappedBy = "stay", fetch = FetchType.LAZY)
+    @OrderBy("sortOrder ASC")
+    private List<StayImage> images = new ArrayList<>();
+
     public UUID getId() { return id; }
     public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public String getLocation() { return location; }
-    public void setLocation(String location) { this.location = location; }
-    public BigDecimal getPricePerNight() { return pricePerNight; }
-    public void setPricePerNight(BigDecimal pricePerNight) { this.pricePerNight = pricePerNight; }
-    public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
-    public String getBookingUrl() { return bookingUrl; }
-    public void setBookingUrl(String bookingUrl) { this.bookingUrl = bookingUrl; }
+    public String getLocationName() { return locationName; }
     public BigDecimal getLatitude() { return latitude; }
-    public void setLatitude(BigDecimal latitude) { this.latitude = latitude; }
     public BigDecimal getLongitude() { return longitude; }
-    public void setLongitude(BigDecimal longitude) { this.longitude = longitude; }
+    public BigDecimal getPriceFrom() { return priceFrom; }
+    public BigDecimal getRating() { return rating; }
+    public String getDescription() { return description; }
+    public String getBookingUrl() { return bookingUrl; }
+    public String getVibeTags() { return vibeTags; }
     public Instant getCreatedAt() { return createdAt; }
+    public List<StayImage> getImages() { return images; }
 }
