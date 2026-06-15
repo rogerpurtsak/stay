@@ -182,8 +182,11 @@ export default function SwipeScreen() {
         <Text className="text-4xl mb-4">🎉</Text>
         <Text className="text-2xl font-bold mb-2 text-center">You've seen them all!</Text>
         <Text className="text-gray-500 text-center mb-8">Your group can now see which stays everyone liked.</Text>
-        <TouchableOpacity onPress={() => navigation.replace('Home')} className="py-4 px-8 rounded-2xl bg-black">
-          <Text className="text-white font-semibold text-base">Back to Home</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Liked', { tripId })} className="py-4 px-8 rounded-2xl bg-black mb-4 w-full items-center">
+          <Text className="text-white font-semibold text-base">See Liked Stays ❤️</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.replace('Home')} className="py-4 px-8 w-full items-center">
+          <Text className="text-gray-400 text-base">Back to Home</Text>
         </TouchableOpacity>
       </View>
     );
@@ -260,7 +263,15 @@ export default function SwipeScreen() {
 
   return (
     <View className="flex-1 bg-gray-50">
-      <View className="flex-1 items-center justify-center px-4 pt-14">
+      <View className="flex-row justify-between items-center px-6 pt-14 pb-2">
+        <TouchableOpacity onPress={() => navigation.replace('Home')}>
+          <Text className="text-gray-400">← Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Liked', { tripId })}>
+          <Text className="text-base">❤️ Liked</Text>
+        </TouchableOpacity>
+      </View>
+      <View className="flex-1 items-center justify-center px-4">
         <View style={styles.cardStack}>
           {renderCards()}
         </View>

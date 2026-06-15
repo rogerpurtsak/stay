@@ -17,7 +17,7 @@ public record StayResponse(
     List<String> vibeTags,
     List<String> imageUrls
 ) {
-    static StayResponse from(Stay stay) {
+    public static StayResponse from(Stay stay) {
         List<String> tags = stay.getVibeTags() == null
             ? List.of()
             : List.of(stay.getVibeTags().split(","));
