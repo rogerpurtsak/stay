@@ -9,6 +9,7 @@ import AuthScreen from './src/screens/AuthScreen';
 import TripLandingScreen from './src/screens/TripLandingScreen';
 import SwipeScreen from './src/screens/SwipeScreen';
 import LikedScreen from './src/screens/LikedScreen';
+import TripRoomScreen from './src/screens/TripRoomScreen';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -24,6 +25,7 @@ export type RootStackParamList = {
   };
   Swipe: { tripId: string };
   Liked: { tripId: string };
+  TripRoom: { tripId: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -40,6 +42,7 @@ export default function App() {
           <Stack.Screen name="TripLanding" component={TripLandingScreen} />
           <Stack.Screen name="Swipe" component={SwipeScreen} />
           <Stack.Screen name="Liked" component={LikedScreen} />
+          <Stack.Screen name="TripRoom" component={TripRoomScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

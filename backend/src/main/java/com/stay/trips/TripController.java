@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.stay.users.User;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -25,6 +26,11 @@ public class TripController {
     @GetMapping("/join/{inviteCode}")
     public Trip getTripByInviteCode(@PathVariable String inviteCode) {
         return tripService.getByInviteCode(inviteCode);
+    }
+
+    @GetMapping("/{tripId}/member-liked")
+    public List<MemberLikedResponse> getMemberLiked(@PathVariable UUID tripId) {
+        return tripService.getMemberLiked(tripId);
     }
 
     @PostMapping
