@@ -182,6 +182,12 @@ export default function TripRoomScreen() {
           <Text className="font-semibold text-base">See Matches</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => navigation.navigate('AddedItems', { tripId })}
+          className="py-4 rounded-2xl items-center border border-gray-200"
+        >
+          <Text className="font-semibold text-base">Added by members</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => navigation.navigate('Liked', { tripId })}
           className="py-4 rounded-2xl items-center border border-gray-200"
         >
