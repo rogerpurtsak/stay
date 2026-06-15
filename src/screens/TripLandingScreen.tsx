@@ -8,7 +8,7 @@ type TripLandingRoute = RouteProp<RootStackParamList, 'TripLanding'>;
 export default function TripLandingScreen() {
   const route = useRoute<TripLandingRoute>();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const { inviteCode, locationName, startDate, endDate, guests } = route.params;
+  const { tripId, inviteCode, locationName, startDate, endDate, guests } = route.params;
 
   const handleShare = async () => {
     await Share.share({
@@ -47,7 +47,7 @@ export default function TripLandingScreen() {
       </View>
 
       <TouchableOpacity
-        onPress={() => navigation.replace('Home')}
+        onPress={() => navigation.replace('Swipe', { tripId })}
         className="py-4 rounded-2xl items-center bg-black"
       >
         <Text className="text-white font-semibold text-base">Start Swiping</Text>

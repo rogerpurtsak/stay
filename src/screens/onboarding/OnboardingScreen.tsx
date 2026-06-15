@@ -9,6 +9,7 @@ import StepLocation from './StepLocation';
 import StepRadius from './StepRadius';
 import StepVibe from './StepVibe';
 import { apiClient } from '../../api/client';
+import { useAuth } from '../../auth/AuthContext';
 
 export type OnboardingData = {
   startDate: string;
@@ -23,6 +24,7 @@ const TOTAL_STEPS = 5;
 
 export default function OnboardingScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { user } = useAuth();
   const [step, setStep] = useState(0);
   const [data, setData] = useState<Partial<OnboardingData>>({});
 
@@ -31,8 +33,34 @@ export default function OnboardingScreen() {
     setData(updated);
     if (step < TOTAL_STEPS - 1) {
       setStep(step + 1);
+      return;
+    }
+
+    const onboardingData = updated as OnboardingData;
+
+    if (user) {
+      try {
+        const trip = await apiClient.post<{ tripId: string; inviteCode: string }>('/api/trips', {
+          locationName: onboardingData.location,
+          radiusKm: onboardingData.radiusKm,
+          guests: onboardingData.guests,
+          vibe: onboardingData.vibe,
+          startDate: onboardingData.startDate,
+          endDate: onboardingData.endDate,
+        });
+        navigation.navigate('TripLanding', {
+          tripId: trip.tripId,
+          inviteCode: trip.inviteCode,
+          locationName: onboardingData.location,
+          startDate: onboardingData.startDate,
+          endDate: onboardingData.endDate,
+          guests: onboardingData.guests,
+        });
+      } catch (e) {
+        alert(String(e));
+      }
     } else {
-      navigation.navigate('Auth', { onboardingData: updated as OnboardingData });
+      navigation.navigate('Auth', { onboardingData });
     }
   };
 
