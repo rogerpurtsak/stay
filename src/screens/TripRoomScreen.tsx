@@ -120,6 +120,12 @@ export default function TripRoomScreen() {
       <View className="px-6 mb-4">
         <Text className="text-lg font-bold mb-4">Members ({trip.members.length})</Text>
 
+        {memberLiked.length === 0 && (
+          <View className="items-center py-6">
+            <Text className="text-gray-400 text-center">No members yet. Share the invite code to get started!</Text>
+          </View>
+        )}
+
         {memberLiked.map(member => (
           <View key={member.memberId} className="mb-6">
             <View className="flex-row items-center gap-2 mb-3">

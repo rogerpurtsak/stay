@@ -107,7 +107,13 @@ export default function MatchesScreen() {
         <View className="flex-1 items-center justify-center px-6 pt-20">
           <Text className="text-4xl mb-4">🤝</Text>
           <Text className="text-xl font-bold mb-2 text-center">No matches yet</Text>
-          <Text className="text-gray-500 text-center">When 2+ members like the same stay, it'll appear here.</Text>
+          <Text className="text-gray-500 text-center mb-6">When 2+ members like the same stay, it'll appear here.</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Swipe', { tripId })}
+            className="bg-black py-4 px-8 rounded-2xl"
+          >
+            <Text className="text-white font-semibold">Keep swiping</Text>
+          </TouchableOpacity>
         </View>
       ) : (
         <View className="px-6">
