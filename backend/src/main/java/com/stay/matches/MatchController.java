@@ -15,7 +15,7 @@ public class MatchController {
     }
 
     @GetMapping
-    public List<UUID> getMatches(@PathVariable UUID tripId) {
-        return matchService.getMatchedStayIds(tripId);
+    public List<MatchResponse> getMatches(@PathVariable UUID tripId) {
+        return matchService.getMatches(tripId);
     }
 }
