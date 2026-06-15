@@ -48,9 +48,15 @@ export default function TripLandingScreen() {
 
       <TouchableOpacity
         onPress={() => navigation.replace('Swipe', { tripId })}
-        className="py-4 rounded-2xl items-center bg-black"
+        className="py-4 rounded-2xl items-center bg-black mb-3"
       >
         <Text className="text-white font-semibold text-base">Start Swiping</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.replace('TripRoom', { tripId })}
+        className="py-4 rounded-2xl items-center border border-gray-200"
+      >
+        <Text className="font-semibold text-base">Trip Room</Text>
       </TouchableOpacity>
     </View>
   );

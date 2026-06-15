@@ -264,8 +264,8 @@ export default function SwipeScreen() {
   return (
     <View className="flex-1 bg-gray-50">
       <View className="flex-row justify-between items-center px-6 pt-14 pb-2">
-        <TouchableOpacity onPress={() => navigation.replace('Home')}>
-          <Text className="text-gray-400">← Home</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('TripRoom', { tripId })}>
+          <Text className="text-gray-400">← Room</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Liked', { tripId })}>
           <Text className="text-base">❤️ Liked</Text>
