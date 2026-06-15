@@ -107,6 +107,19 @@ public class TripService {
                 trip.getGuests(), trip.getStartDate(), trip.getEndDate(), members);
     }
 
+    public List<UserTripResponse> getTripsForUser(UUID userId) {
+        return tripMemberRepository.findByUserId(userId).stream()
+                .map(member -> tripRepository.findById(member.getTripId()).map(trip -> {
+                    int memberCount = tripMemberRepository.findByTripId(trip.getId()).size();
+                    boolean isCreator = userId.equals(trip.getCreatedByUserId());
+                    return new UserTripResponse(trip.getId(), trip.getInviteCode(),
+                            trip.getLocationName(), trip.getStartDate(), trip.getEndDate(),
+                            trip.getGuests(), isCreator, memberCount);
+                }).orElse(null))
+                .filter(Objects::nonNull)
+                .toList();
+    }
+
     public List<MemberResponse> getMembers(UUID tripId) {
         return tripMemberRepository.findByTripId(tripId)
                 .stream().map(MemberResponse::from).toList();
