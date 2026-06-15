@@ -7,4 +7,5 @@ import java.util.UUID;
 public interface SwipeRepository extends JpaRepository<Swipe, UUID> {
     List<Swipe> findByTripIdAndUserId(UUID tripId, UUID userId);
     List<Swipe> findByTripIdAndLikedTrue(UUID tripId);
+    boolean existsByTripIdAndUserIdAndStayId(UUID tripId, UUID userId, UUID stayId);
 }

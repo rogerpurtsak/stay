@@ -13,6 +13,18 @@ public class SwipeService {
         this.swipeRepository = swipeRepository;
     }
 
+    public void createSwipe(UUID tripId, UUID userId, SwipeRequest request) {
+        if (swipeRepository.existsByTripIdAndUserIdAndStayId(tripId, userId, request.stayId())) {
+            return;
+        }
+        Swipe swipe = new Swipe();
+        swipe.setTripId(tripId);
+        swipe.setUserId(userId);
+        swipe.setStayId(request.stayId());
+        swipe.setLiked(request.liked());
+        swipeRepository.save(swipe);
+    }
+
     public List<Swipe> getLikedByTrip(UUID tripId) {
         return swipeRepository.findByTripIdAndLikedTrue(tripId);
     }
