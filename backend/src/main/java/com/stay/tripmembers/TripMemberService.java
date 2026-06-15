@@ -16,4 +16,9 @@ public class TripMemberService {
     public List<TripMember> getByTripId(UUID tripId) {
         return tripMemberRepository.findByTripId(tripId);
     }
+
+    public void leave(UUID tripId, UUID userId) {
+        tripMemberRepository.findByTripIdAndUserId(tripId, userId)
+                .ifPresent(tripMemberRepository::delete);
+    }
 }

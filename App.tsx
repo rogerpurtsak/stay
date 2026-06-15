@@ -11,6 +11,8 @@ import SwipeScreen from './src/screens/SwipeScreen';
 import LikedScreen from './src/screens/LikedScreen';
 import TripRoomScreen from './src/screens/TripRoomScreen';
 import MatchesScreen from './src/screens/MatchesScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
+import MyTripsScreen from './src/screens/MyTripsScreen';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -28,6 +30,8 @@ export type RootStackParamList = {
   Liked: { tripId: string };
   TripRoom: { tripId: string };
   Matches: { tripId: string };
+  Profile: undefined;
+  MyTrips: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -46,6 +50,8 @@ export default function App() {
           <Stack.Screen name="Liked" component={LikedScreen} />
           <Stack.Screen name="TripRoom" component={TripRoomScreen} />
           <Stack.Screen name="Matches" component={MatchesScreen} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen name="MyTrips" component={MyTripsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
