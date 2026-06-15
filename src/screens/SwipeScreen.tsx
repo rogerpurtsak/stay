@@ -182,11 +182,14 @@ export default function SwipeScreen() {
         <Text className="text-4xl mb-4">🎉</Text>
         <Text className="text-2xl font-bold mb-2 text-center">You've seen them all!</Text>
         <Text className="text-gray-500 text-center mb-8">Your group can now see which stays everyone liked.</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Liked', { tripId })} className="py-4 px-8 rounded-2xl bg-black mb-4 w-full items-center">
-          <Text className="text-white font-semibold text-base">See Liked Stays ❤️</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Matches', { tripId })} className="py-4 px-8 rounded-2xl bg-black mb-3 w-full items-center">
+          <Text className="text-white font-semibold text-base">See Matches 🤝</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.replace('Home')} className="py-4 px-8 w-full items-center">
-          <Text className="text-gray-400 text-base">Back to Home</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Liked', { tripId })} className="py-4 px-8 rounded-2xl border border-gray-200 mb-3 w-full items-center">
+          <Text className="font-semibold text-base">My Liked Stays ❤️</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('TripRoom', { tripId })} className="py-4 px-8 w-full items-center">
+          <Text className="text-gray-400 text-base">Trip Room</Text>
         </TouchableOpacity>
       </View>
     );
