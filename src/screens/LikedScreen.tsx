@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -111,7 +111,13 @@ export default function LikedScreen() {
         <View className="flex-1 items-center justify-center px-6">
           <Text className="text-4xl mb-4">🤍</Text>
           <Text className="text-xl font-bold mb-2">No liked stays yet</Text>
-          <Text className="text-gray-500 text-center">Swipe right on stays you like and they'll appear here.</Text>
+          <Text className="text-gray-500 text-center mb-6">Swipe right on stays you like and they'll appear here.</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Swipe', { tripId })}
+            className="bg-black py-4 px-8 rounded-2xl"
+          >
+            <Text className="text-white font-semibold">Explore stays</Text>
+          </TouchableOpacity>
         </View>
       ) : (
         <ScrollView className="flex-1 px-6">
